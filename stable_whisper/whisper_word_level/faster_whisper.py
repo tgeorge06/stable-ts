@@ -127,7 +127,11 @@ def faster_transcribe(
     Saved: audio.srt
     """
     audioloader_not_supported(audio)
-    extra_options = isolate_useful_options(options, transcribe_any, pop=False)
+    # keep duplicate‑key safety but restore the keys the router needs
+    extra_options = isolate_useful_options(options, transcribe_any, pop=True)
+    for k in ("batch_size", "chunk_length"):
+        if k in extra_options:  # put them back so _inner_transcribe sees them
+            options[k] = extra_options[k]
     denoiser, denoiser_options = convert_demucs_kwargs(
         denoiser, denoiser_options, demucs=demucs, demucs_options=demucs_options
     )
