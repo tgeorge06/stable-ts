@@ -127,7 +127,7 @@ def faster_transcribe(
     Saved: audio.srt
     """
     audioloader_not_supported(audio)
-    extra_options = isolate_useful_options(options, transcribe_any, pop=True)
+    extra_options = isolate_useful_options(options, transcribe_any, pop=False)
     denoiser, denoiser_options = convert_demucs_kwargs(
         denoiser, denoiser_options, demucs=demucs, demucs_options=demucs_options
     )
